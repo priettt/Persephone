@@ -46,7 +46,7 @@ fun PlantCard(plant: Plant) {
         Image(
             modifier = Modifier.clip(RoundedCornerShape(20.dp)),
             painter = painterResource(id = plant.resourceId),
-            contentDescription = "A test plant"
+            contentDescription = "A picture of a ${plant.name}"
         )
         Text(
             text = plant.name,
