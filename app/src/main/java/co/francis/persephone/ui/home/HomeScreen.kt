@@ -17,9 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeViewModel: HomeViewModel = viewModel()
+) {
     Column {
         Text(
             text = "Home",
@@ -32,7 +35,7 @@ fun HomeScreen() {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(16.dp)
         ) {
-            val plants: List<Plant> = PlantsRepository().getPlants()
+            val plants: List<Plant> = homeViewModel.uiState.plants
             items(plants) {
                 PlantCard(plant = it)
             }
