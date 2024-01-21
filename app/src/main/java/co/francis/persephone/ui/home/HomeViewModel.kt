@@ -1,15 +1,15 @@
 package co.francis.persephone.ui.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel(
     private val plantsRepository: PlantsRepository = PlantsRepository()
 ) : ViewModel() {
-    var uiState by mutableStateOf(HomeUiState(plantsRepository.getPlants()))
-        private set
+
+    private val _uiState = MutableStateFlow(HomeUiState(plantsRepository.getPlants()))
+    val uiState = _uiState.asStateFlow()
 
 }
 
