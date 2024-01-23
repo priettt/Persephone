@@ -74,8 +74,10 @@ fun PlantCard(plant: Plant) {
         )
         Text(
             text = plant.name,
-            Modifier.align(Alignment.CenterHorizontally),
-            fontSize = 14.sp
+            Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 8.dp),
+            fontSize = 16.sp
         )
     }
 }
