@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(
-    private val plantsRepository: PlantsRepository = PlantsRepository()
+    plantsRepository: PlantsRepository = LocalPlantsRepository()
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> =
