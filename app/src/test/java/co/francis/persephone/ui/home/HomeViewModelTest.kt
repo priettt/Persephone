@@ -1,11 +1,6 @@
 package co.francis.persephone.ui.home
 
 import co.francis.persephone.util.MainDispatcherRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -22,29 +17,24 @@ class HomeViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = HomeViewModel(
-            plantsRepository = plantsRepository
-        )
+        viewModel = HomeViewModel(plantsRepository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when plants are emitted then uiState emits plants`() = runTest {
-        val collectJob = launch(UnconfinedTestDispatcher()) {
-            viewModel.uiState.collect()
-        }
-
-        assertEquals(emptyList<Plant>(), viewModel.uiState.value.plants)
-
+    fun `fetch plants on view model startup`() {
+        // given a repository with plants
         val plants = listOf(
             Plant("Plantita 1", 1),
             Plant("Plantita 2", 2),
             Plant("Plantita 3", 3)
         )
-        plantsRepository.emit(plants)
-        assertEquals(plants, viewModel.uiState.value.plants)
+        plantsRepository.setPlants(plants)
 
-        collectJob.cancel()
+        // when the view model is created
+        viewModel = HomeViewModel(plantsRepository)
+
+        // then the plants are fetched
+        assertEquals(plants, viewModel.uiState.value.plants)
     }
 
 }
