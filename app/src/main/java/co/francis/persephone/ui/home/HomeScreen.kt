@@ -47,7 +47,9 @@ fun HomeScreen(
                 text = "My plants",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    .align(Alignment.CenterHorizontally)
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),

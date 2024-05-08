@@ -10,18 +10,6 @@ class LocalPlantsRepository(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlantsRepository {
 
-    init {
-        Timer().schedule(5000) {
-            plants.addAll(
-                listOf(
-                    Plant("Bonsai"),
-                    Plant("Orquidea"),
-                    Plant("Calla")
-                )
-            )
-        }
-    }
-
     private val plants = mutableListOf(
         Plant("Potus"),
         Plant("Dieffenbachia"),

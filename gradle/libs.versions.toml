@@ -1,11 +1,11 @@
 [versions]
-activity-compose = "1.8.2"
-agp = "8.2.1"
+activity-compose = "1.9.0"
+agp = "8.2.2"
 androidx-test-ext-junit = "1.1.5"
-compose-bom = "2023.10.01"
-compose-compiler = "1.5.8"
+compose-bom = "2024.05.00"
+compose-compiler = "1.5.8"  # this is being used in app/build.gradle, as compose.compiler
 coroutines = "1.7.3"
-core-ktx = "1.12.0"
+core-ktx = "1.13.1"
 espresso-core = "3.5.1"
 junit = "4.13.2"
 lifecycle-runtime-ktx = "2.7.0"
