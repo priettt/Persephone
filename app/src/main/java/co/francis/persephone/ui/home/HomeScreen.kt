@@ -28,14 +28,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel(),
+    onAddPlantClick: () -> Unit,
 ) {
     val uiState = homeViewModel.uiState.collectAsStateWithLifecycle()
-
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = { onAddPlantClick() },
                 content = { Icon(Icons.Default.Add, "Add a plant") }
             )
         },
