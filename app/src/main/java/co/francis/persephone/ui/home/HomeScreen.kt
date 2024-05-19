@@ -21,13 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.francis.persephone.R
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(),
     onAddPlantClick: () -> Unit,
 ) {
@@ -40,27 +43,32 @@ fun HomeScreen(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding)
+        HomeScreenContent(modifier.padding(innerPadding), uiState.value.plants)
+    }
+}
+
+@Composable
+private fun HomeScreenContent(
+    modifier: Modifier = Modifier,
+    plants: List<Plant>,
+) {
+    Column(modifier) {
+        Text(
+            text = "My plants",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp)
         ) {
-            Text(
-                text = "My plants",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(16.dp)
-            ) {
-                val plants: List<Plant> = uiState.value.plants
-                items(plants) {
-                    PlantCard(plant = it)
-                }
+            items(plants) {
+                PlantCard(plant = it)
             }
         }
     }
@@ -82,4 +90,17 @@ fun PlantCard(plant: Plant) {
             fontSize = 16.sp
         )
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenContentPreview() {
+    HomeScreenContent(
+        plants = listOf(
+            Plant("Aloe Vera", R.drawable.plantita),
+            Plant("Ficus", R.drawable.plantita),
+            Plant("Rose", R.drawable.plantita),
+            Plant("Sansiveria", R.drawable.plantita),
+        )
+    )
 }

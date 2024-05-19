@@ -1,6 +1,6 @@
 [versions]
 activity-compose = "1.9.0"
-agp = "8.2.2"
+agp = "8.4.0"
 androidx-test-ext-junit = "1.1.5"
 compose-bom = "2024.05.00"
 compose-compiler = "1.5.8"  # this is being used in app/build.gradle, as compose.compiler
