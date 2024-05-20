@@ -6,43 +6,32 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-
-/**
- * THings we should ask for:
- * Name:
- * Scientific name:
- * Water frequency:
- * Should pulverize
- * Sunlight requirements:
- * Interior/exterior:
- * Temperature
- * Fertilizing:
- * Toxicity:
- */
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.PLANTS_PLACEMENT
+import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.SUNLIGHT_REQUIREMENTS
+import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.WATER_FREQUENCIES
 
 @Composable
 fun AddPlantScreen(
-    onPlantAdded: () -> Unit
+    onPlantAdded: () -> Unit,
+    addPlantViewModel: AddPlantViewModel = viewModel()
 ) {
     val scrollState = rememberScrollState()
+    val uiState = addPlantViewModel.uiState.collectAsStateWithLifecycle().value
     Column(
         modifier = Modifier
             .padding(24.dp)
@@ -56,84 +45,63 @@ fun AddPlantScreen(
             fontWeight = FontWeight.Bold
         )
 
-        var name by remember { mutableStateOf("") }
         OutlinedTextField(
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .fillMaxWidth(),
-            value = name,
-            onValueChange = { name = it },
+            value = uiState.name,
+            onValueChange = { addPlantViewModel.onNameChanged(it) },
             label = { Text("Plant name") },
             singleLine = true
         )
 
-        var scientificName by remember { mutableStateOf("") }
         OutlinedTextField(
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .fillMaxWidth(),
-            value = scientificName,
-            onValueChange = { scientificName = it },
+            value = uiState.scientificName,
+            onValueChange = { addPlantViewModel.onScientificNameChanged(it) },
             label = { Text("Scientific name") },
             singleLine = true
         )
 
-        var waterFrequencySliderState by remember { mutableFloatStateOf(0f) }
         LabeledSlider(
             label = "Water frequency",
-            value = waterFrequencySliderState,
-            onValueChange = { waterFrequencySliderState = it },
-            labels = listOf(
-                "Never",
-                "When the soil is completely dry",
-                "When the soil top inch is dry",
-                "Keep soil moist"
-            )
+            value = uiState.wateringFrequency,
+            onValueChange = { addPlantViewModel.onWateringFrequencyChanged(it) },
+            labels = WATER_FREQUENCIES
         )
 
-        val sunlightRequirementsRange = listOf(
-            "Low light",
-            "Medium light",
-            "Bright indirect light",
-            "Direct sunlight"
-        )
-        var sunlightSliderState by remember {
-            mutableStateOf(0f..(sunlightRequirementsRange.size - 1).toFloat())
-        }
         LabeledRangeSlider(
             label = "Sunlight requirements",
-            value = sunlightSliderState,
-            onValueChange = { newValue -> sunlightSliderState = newValue },
-            labels = sunlightRequirementsRange
+            value = uiState.sunlightRequirement,
+            onValueChange = { addPlantViewModel.onSunlightRequirementChanged(it) },
+            labels = SUNLIGHT_REQUIREMENTS
         )
 
-        var placementSliderState by remember { mutableFloatStateOf(0f) }
         LabeledSlider(
             label = "Placement",
-            value = placementSliderState,
-            onValueChange = { placementSliderState = it },
-            labels = listOf(
-                "Indoors",
-                "Both",
-                "Outdoors"
-            )
+            value = uiState.placement,
+            onValueChange = { addPlantViewModel.onPlacementChanged(it) },
+            labels = PLANTS_PLACEMENT
         )
 
-        var isInterior by remember { mutableStateOf(false) }
-        LabeledCheckbox(
-            modifier = Modifier.align(Alignment.Start),
-            label = "This plant is an interior plant",
-            checked = isInterior,
-            onCheckedChange = { isInterior = it }
-        )
-
-        var shouldPulverize by remember { mutableStateOf(false) }
         LabeledCheckbox(
             modifier = Modifier.align(Alignment.Start),
             label = "This plant should be pulverized",
-            checked = shouldPulverize,
-            onCheckedChange = { shouldPulverize = it }
+            checked = uiState.shouldPulverize,
+            onCheckedChange = { addPlantViewModel.onShouldPulverizeChanged(it) }
         )
+
+        Button(
+            onClick = { onPlantAdded() },
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+        ) {
+            Text("Add plant")
+        }
     }
 }
 
@@ -223,7 +191,9 @@ fun LabeledCheckbox(
 @Preview
 @Composable
 fun AddPlantScreenPreview() {
-    AddPlantScreen { }
+    AddPlantScreen(
+        onPlantAdded = {}
+    )
 }
 
 @Preview
