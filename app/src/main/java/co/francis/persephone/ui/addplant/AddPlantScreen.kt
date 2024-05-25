@@ -27,8 +27,8 @@ import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.WATER_FREQU
 
 @Composable
 fun AddPlantScreen(
-    onPlantAdded: () -> Unit,
-    addPlantViewModel: AddPlantViewModel = viewModel()
+    addPlantViewModel: AddPlantViewModel = viewModel(),
+    onPlantAdded: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val uiState = addPlantViewModel.uiState.collectAsStateWithLifecycle().value
@@ -66,6 +66,7 @@ fun AddPlantScreen(
         )
 
         LabeledSlider(
+            modifier = Modifier.padding(vertical = 16.dp),
             label = "Water frequency",
             value = uiState.wateringFrequency,
             onValueChange = { addPlantViewModel.onWateringFrequencyChanged(it) },
@@ -73,6 +74,7 @@ fun AddPlantScreen(
         )
 
         LabeledRangeSlider(
+            modifier = Modifier.padding(vertical = 16.dp),
             label = "Sunlight requirements",
             value = uiState.sunlightRequirement,
             onValueChange = { addPlantViewModel.onSunlightRequirementChanged(it) },
@@ -80,6 +82,7 @@ fun AddPlantScreen(
         )
 
         LabeledSlider(
+            modifier = Modifier.padding(vertical = 16.dp),
             label = "Placement",
             value = uiState.placement,
             onValueChange = { addPlantViewModel.onPlacementChanged(it) },
@@ -96,7 +99,7 @@ fun AddPlantScreen(
         Button(
             onClick = { onPlantAdded() },
             modifier = Modifier
-                .padding(8.dp)
+                .padding(vertical = 8.dp)
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
         ) {
@@ -107,66 +110,72 @@ fun AddPlantScreen(
 
 @Composable
 fun LabeledSlider(
+    modifier: Modifier = Modifier,
     label: String,
     value: Float,
     onValueChange: (Float) -> Unit,
     labels: List<String>
 ) {
-    Text(
-        modifier = Modifier.padding(top = 16.dp),
-        text = label,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Light,
-    )
-    Slider(
-        value = value,
-        onValueChange = onValueChange,
-        valueRange = 0f..(labels.size - 1).toFloat(),
-        steps = labels.size - 2
-    )
-    Text(
-        text = labels[value.toInt()],
-        modifier = Modifier.padding(bottom = 16.dp)
-    )
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = label,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Light,
+        )
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..(labels.size - 1).toFloat(),
+            steps = labels.size - 2
+        )
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = labels[value.toInt()]
+        )
+    }
 }
 
 @Composable
 fun LabeledRangeSlider(
+    modifier: Modifier = Modifier,
     label: String,
     value: ClosedFloatingPointRange<Float>,
     onValueChange: (ClosedFloatingPointRange<Float>) -> Unit,
     labels: List<String>
 ) {
-    Text(
-        modifier = Modifier.padding(top = 16.dp),
-        text = label,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Light,
-    )
-    RangeSlider(
-        value = value,
-        onValueChange = onValueChange,
-        valueRange = 0f..(labels.size - 1).toFloat(),
-        steps = labels.size - 2
-    )
-    val sliderText =
-        if (value.start == value.endInclusive) {
-            labels[value.start.toInt()]
-        } else {
-            "${labels[value.start.toInt()]} to ${labels[value.endInclusive.toInt()]}"
-        }
-    Text(
-        text = sliderText,
-        modifier = Modifier.padding(bottom = 16.dp)
-    )
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = label,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Light,
+        )
+        RangeSlider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..(labels.size - 1).toFloat(),
+            steps = labels.size - 2
+        )
+        val sliderText =
+            if (value.start == value.endInclusive) {
+                labels[value.start.toInt()]
+            } else {
+                "${labels[value.start.toInt()]} to ${labels[value.endInclusive.toInt()]}"
+            }
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = sliderText
+        )
+    }
 }
 
 @Composable
 fun LabeledCheckbox(
+    modifier: Modifier = Modifier,
     label: String,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -200,14 +209,22 @@ fun AddPlantScreenPreview() {
 @Composable
 fun LabeledSliderPreview() {
     LabeledSlider(
+        modifier = Modifier.padding(16.dp),
         label = "Water frequency",
         value = 0f,
         onValueChange = {},
-        labels = listOf(
-            "Never",
-            "When the soil is completely dry",
-            "When the soil top inch is dry",
-            "Keep soil moist"
-        )
+        labels = WATER_FREQUENCIES
+    )
+}
+
+@Preview
+@Composable
+fun LabeledRangeSliderPreview() {
+    LabeledRangeSlider(
+        modifier = Modifier.padding(16.dp),
+        label = "Sunlight requirements",
+        value = 0f..(SUNLIGHT_REQUIREMENTS.size - 1).toFloat(),
+        onValueChange = {},
+        labels = SUNLIGHT_REQUIREMENTS
     )
 }

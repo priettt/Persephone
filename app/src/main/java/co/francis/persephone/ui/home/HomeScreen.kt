@@ -30,7 +30,6 @@ import co.francis.persephone.R
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(),
     onAddPlantClick: () -> Unit,
 ) {
@@ -43,7 +42,7 @@ fun HomeScreen(
             )
         },
     ) { innerPadding ->
-        HomeScreenContent(modifier.padding(innerPadding), uiState.value.plants)
+        HomeScreenContent(Modifier.padding(innerPadding), uiState.value.plants)
     }
 }
 
