@@ -6,6 +6,7 @@ compose-bom = "2024.05.00"
 compose-compiler = "1.5.14"  # this is being used in app/build.gradle, as compose.compiler
 coroutines = "1.7.3"
 core-ktx = "1.13.1"
+embrace-swazzler = "6.7.0"
 espresso-core = "3.5.1"
 junit = "4.13.2"
 lifecycle-runtime-ktx = "2.7.0"
@@ -35,6 +36,7 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
+io-embrace-swazzler = { id = "io.embrace.swazzler", version.ref = "embrace-swazzler" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
 
 [bundles]
