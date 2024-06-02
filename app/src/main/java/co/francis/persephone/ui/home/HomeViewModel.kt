@@ -2,11 +2,14 @@ package co.francis.persephone.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
-    private val plantsRepository: PlantsRepository = LocalPlantsRepository()
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val plantsRepository: PlantsRepository
 ) : ViewModel() {
 
     val uiState = MutableStateFlow(HomeUiState(emptyList()))

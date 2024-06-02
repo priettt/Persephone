@@ -1,13 +1,12 @@
 package co.francis.persephone.ui.home
 
+import co.francis.persephone.di.DispatcherModule.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.Timer
-import kotlin.concurrent.schedule
+import javax.inject.Inject
 
-class LocalPlantsRepository(
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+class LocalPlantsRepository @Inject constructor(
+    @IoDispatcher val dispatcher: CoroutineDispatcher
 ) : PlantsRepository {
 
     private val plants = mutableListOf(

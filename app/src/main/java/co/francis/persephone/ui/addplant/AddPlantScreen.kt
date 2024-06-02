@@ -19,15 +19,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.PLANTS_PLACEMENT
 import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.SUNLIGHT_REQUIREMENTS
 import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.WATER_FREQUENCIES
 
 @Composable
 fun AddPlantScreen(
-    addPlantViewModel: AddPlantViewModel = viewModel(),
+    addPlantViewModel: AddPlantViewModel = hiltViewModel(),
     onPlantAdded: () -> Unit
 ) {
     val scrollState = rememberScrollState()

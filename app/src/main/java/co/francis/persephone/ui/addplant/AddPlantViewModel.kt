@@ -2,18 +2,15 @@ package co.francis.persephone.ui.addplant
 
 import androidx.lifecycle.ViewModel
 import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.SUNLIGHT_REQUIREMENTS
+import co.francis.persephone.ui.home.PlantsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-data class AddPlantUiState(
-    val name: String = "",
-    val scientificName: String = "",
-    val wateringFrequency: Float = 0f,
-    val sunlightRequirement: ClosedFloatingPointRange<Float> = 0f..(SUNLIGHT_REQUIREMENTS.size - 1).toFloat(),
-    val placement: Float = 0f,
-    val shouldPulverize: Boolean = false
-)
-
-class AddPlantViewModel : ViewModel() {
+@HiltViewModel
+class AddPlantViewModel @Inject constructor(
+    private val plantsRepository: PlantsRepository
+) : ViewModel() {
     fun onNameChanged(name: String) {
         uiState.value = uiState.value.copy(name = name)
     }
@@ -65,3 +62,11 @@ class AddPlantViewModel : ViewModel() {
     }
 }
 
+data class AddPlantUiState(
+    val name: String = "",
+    val scientificName: String = "",
+    val wateringFrequency: Float = 0f,
+    val sunlightRequirement: ClosedFloatingPointRange<Float> = 0f..(SUNLIGHT_REQUIREMENTS.size - 1).toFloat(),
+    val placement: Float = 0f,
+    val shouldPulverize: Boolean = false
+)
