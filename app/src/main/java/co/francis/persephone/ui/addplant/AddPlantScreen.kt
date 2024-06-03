@@ -97,7 +97,10 @@ fun AddPlantScreen(
         )
 
         Button(
-            onClick = { onPlantAdded() },
+            onClick = {
+                addPlantViewModel.onPlantAdded()
+                onPlantAdded()
+            },
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()

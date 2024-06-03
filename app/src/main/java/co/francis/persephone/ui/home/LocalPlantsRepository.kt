@@ -9,7 +9,7 @@ class LocalPlantsRepository @Inject constructor(
     @IoDispatcher val dispatcher: CoroutineDispatcher
 ) : PlantsRepository {
 
-    private val plants = mutableListOf(
+    private val storedPlants = mutableListOf(
         Plant("Potus"),
         Plant("Dieffenbachia"),
         Plant("Gomero"),
@@ -17,7 +17,11 @@ class LocalPlantsRepository @Inject constructor(
     )
 
     override suspend fun fetchPlants(): List<Plant> = withContext(dispatcher) {
-        return@withContext plants
+        return@withContext storedPlants
+    }
+
+    override suspend fun savePlants(plants: List<Plant>): Unit = withContext(dispatcher) {
+        storedPlants.addAll(plants)
     }
 
 }

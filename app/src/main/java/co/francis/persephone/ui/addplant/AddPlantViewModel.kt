@@ -1,10 +1,13 @@
 package co.francis.persephone.ui.addplant
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import co.francis.persephone.ui.addplant.AddPlantViewModel.Companion.SUNLIGHT_REQUIREMENTS
+import co.francis.persephone.ui.home.Plant
 import co.francis.persephone.ui.home.PlantsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +39,14 @@ class AddPlantViewModel @Inject constructor(
     }
 
     fun onPlantAdded() {
-
+        if (uiState.value.name.isBlank()) return
+        viewModelScope.launch {
+            plantsRepository.savePlants(
+                listOf(
+                    Plant(uiState.value.name)
+                )
+            )
+        }
     }
 
     val uiState = MutableStateFlow(AddPlantUiState())
