@@ -1,54 +1,5 @@
 {
   "app_id": "sazwW",
   "api_token": "13f327e891ad45858949004eb755b9f1",
-  "ndk_enabled": true,
-  "sdk_config": {
-    "base_urls": {
-      "config.REMOVE_THIS_FOR_STG": "https://a-sazwW.config.stg.emb-eng.com",
-      "data.REMOVE_THIS_FOR_STG": "https://a-sazwW.data.stg.emb-eng.com",
-      "config.REMOVE_THIS_TO_SET_MOCK_API": "http://YOUR_LOCAL_IP_HERE:8989/api",
-      "data.REMOVE_THIS_TO_SET_MOCK_API": "http://YOUR_LOCAL_IP_HERE:8989/api"
-    },
-    "app": {
-      "report_disk_usage": true
-    },
-    "crash_handler": {
-      "enabled": true
-    },
-    "networking": {
-      "capture_request_content_length": true,
-      "disabled_url_patterns.REMOVE_THIS_TO_SET": [],
-      "enable_native_monitoring.REMOVE_THIS_TO_SET": true,
-      "trace_id_header.REMOVE_THIS_TO_SET": "x-emb-trace-id"
-    },
-    "session": {
-      "async_end.REMOVE_THIS_TO_SET": true,
-      "max_session_seconds.REMOVE_THIS_TO_SET": 60
-    },
-    "startup_moment": {
-      "automatically_end.REMOVE_THIS_TO_SET": false
-    },
-    "taps": {
-      "capture_coordinates": true
-    },
-    "webview": {
-      "capture_query_params": true,
-      "enable": true
-    },
-    "automatic_data_capture": {
-      "memory_info": true,
-      "power_save_mode_info": true,
-      "network_connectivity_info": true,
-      "anr_info": true
-    },
-    "anr": {
-      "capture_google.REMOVE_THIS_TO_SET": true
-    },
-    "background_activity": {
-      "capture_enabled": true,
-      "manual_background_activity_limit.REMOVE_THIS_TO_SET": 50,
-      "min_background_activity_duration.REMOVE_THIS_TO_SET": 3500,
-      "max_cached_activities.REMOVE_THIS_TO_SET": 5
-    }
-  }
+  "ndk_enabled": true
 }
